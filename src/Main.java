@@ -1,44 +1,42 @@
 
 public class Main {
-    public static void main(String[] args) {
-        MyLinkedList<String> mll = new MyLinkedList<>();
-        mll.insertFirst("Maria");
-        mll.insertFirst("Katya");
-        mll.insertFirst("Luba");
 
-//        for (int i = 0; i < 3; i++) {
-//            System.out.println(mll.removeFirst());
-//        }
-
-//        mll.insertLast("Maria");
-//        mll.insertLast("Katya");
-//        mll.insertLast("Luba");
-//
-//        for (int i = 0; i < 3; i++) {
-//            System.out.println(mll.removeLast());
-//        }
-
-
-//        System.out.println(mll.indexOf("Maria"));
-
-//        System.out.println(mll);
-//        mll.insert(2, "mmm");
-//        System.out.println(mll);
-//        System.out.println(mll.remove(2));
-////        mll.remove("mmm");
-//        System.out.println(mll);
-//
-//        for (String s : mll) {
-//            System.out.println(s);
-//        }
-
-        MyQueue<String> mq = new MyQueue<>();
-        mq.enqueue("qwe");
-        mq.enqueue("asd");
-        mq.enqueue("zxc");
-
-        for (int i = 0; i < 3; i++) {
-            System.out.println(mq.dequeue());
+    // возведение в степень рекурсией
+    public static double myPow(double numb, int degree){
+        if(degree == 0){
+            return 1;
         }
+        if(degree < 0) {
+            return myPow(1 / numb, -degree);
+        }
+        return numb * myPow(numb, degree-1);
+    }
+
+    // задача о рюкзаке
+    public static boolean fillKnapsack(int[] arr, int total){
+        return fillKnapsack(arr, 0, total);
+    }
+
+    private static boolean fillKnapsack(int[] arr, int start, int total){
+        if(start == arr.length){
+            return false;
+        }
+        int current = arr[start];
+        if(current == total){
+            System.out.println("Положили в рюкзак " + current);
+            return true;
+        }else if(current > total || !fillKnapsack(arr, start + 1, total - current)){
+            return fillKnapsack(arr, start + 1, total);
+        }
+        System.out.println("Положили в рюкзак " + current);
+        return true;
+    }
+
+
+    public static void main(String[] args) {
+        //System.out.println(myPow(2, -4));
+
+        int[] arr = {11, 8, 7, 6, 5};
+        System.out.println(fillKnapsack(arr, 20));
     }
 }
