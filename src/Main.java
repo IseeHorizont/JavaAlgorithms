@@ -1,32 +1,36 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
+        Graph myGraph = new Graph(10);
+        myGraph.addEdge(0, 1);
+        myGraph.addEdge(1, 2);
+        myGraph.addEdge(1, 4);
+        myGraph.addEdge(0, 4);
+        myGraph.addEdge(2, 4);
+        myGraph.addEdge(4, 6);
+        //myGraph.addEdge(5, 6);
+        myGraph.addEdge(6, 7);
+        myGraph.addEdge(7, 8);
+        myGraph.addEdge(4, 8);
+        myGraph.addEdge(8, 9);
+        myGraph.addEdge(4, 9);
+        myGraph.addEdge(3, 9);
 
-        List<MyTreeMap> treeList = new LinkedList<>();
-        Random random = new Random();
+        findSmallestRoad(myGraph, 0, 8);
+        findSmallestRoad(myGraph, 4, 5);
+        findSmallestRoad(myGraph, 1, 7);
 
-        for (int i = 0; i < 20; i++) {
-            MyTreeMap tree = new MyTreeMap();
-            for (int j = 0; j < 64 - random.nextInt(32); j++) {
-                tree.put(random.nextInt(100), 100 - random.nextInt(201));
-            }
-            treeList.add(tree);
+    }
+
+    public static void findSmallestRoad(Graph g, int start, int finish){
+        BreadthFirstPaths bfs = new BreadthFirstPaths(g, start);
+        if(bfs.hasPathTo(finish)){
+            System.out.println("Кратчайший путь от точки " + bfs.getSource() + " до указанной Вами: "
+                    + bfs.pathTo(finish));
+        }else{
+            System.out.println("Маршрута пока не существует :(");
         }
 
-        int count = 0;
-        for (int i = 0; i < treeList.size(); i++) {
-            count += treeList.get(i).isBalanced() ? 1 : 0;
-        }
-
-        /**
-         * Процент сбалансированности созданных деревьев за 15-20 запусков программы варьируется от 45 до 100
-         */
-        System.out.println(String.format("%s %d", "Сделано деревьев:", treeList.size()));
-        System.out.println(String.format("%s %d%s", "Из них сбалансированные деревья:",
-                                                        count * 100 / treeList.size(), "%"));
     }
 }
